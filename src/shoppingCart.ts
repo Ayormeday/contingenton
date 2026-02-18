@@ -19,10 +19,17 @@ const addItem = (cart: ShoppingCart, product: Product, quantity: number) => {
 };
 
 const getTotal = (cart: ShoppingCart): number => {
-  return cart.items.reduce(
+  const unitTotal = cart.items.reduce(
     (total, item) => total + item.product.price * item.quantity,
     0,
   );
+  // call rounder function
+  return roundValue(unitTotal);
+};
+
+// implementing rounding to 2 d.p function
+const roundValue = (value: number): number => {
+  return Math.round(value * 100) / 100;
 };
 
 export { CartItem, ShoppingCart, createCart, addItem, getTotal };
