@@ -1,4 +1,5 @@
 import { Product } from "./product";
+import { roundValue, checkDuplicate } from "./helper";
 
 type CartItem = {
   product: Product;
@@ -14,8 +15,26 @@ const createCart = (): ShoppingCart => {
   return { items: [] };
 };
 
-const addItem = (cart: ShoppingCart, product: Product, quantity: number) => {
-  return { items: [...cart.items, { product, quantity }] };
+const addItem = (cart: ShoppingCart, product: Product, quantity: number): ShoppingCart => {
+  const existingIndex = cart.items.findIndex((item) => checkDuplicate(item.product, product));
+
+  // If product not already in cart, create a new line item
+  if (existingIndex === -1) {
+    return { items: [...cart.items, { product, quantity }] };
+  }
+
+  // else, replace product with accumulated quantity
+  const existingItem = cart.items[existingIndex];
+  const updatedItem: CartItem = {
+    product: existingItem.product,
+    quantity: existingItem.quantity + quantity,
+  };
+
+  const updatedItems = cart.items.map((item, index) =>
+    index === existingIndex ? updatedItem : item
+  );
+
+  return { items: updatedItems };
 };
 
 const getTotal = (cart: ShoppingCart): number => {
@@ -28,8 +47,5 @@ const getTotal = (cart: ShoppingCart): number => {
 };
 
 // implementing rounding to 2 d.p function
-const roundValue = (value: number): number => {
-  return Math.round(value * 100) / 100;
-};
 
 export { CartItem, ShoppingCart, createCart, addItem, getTotal };
