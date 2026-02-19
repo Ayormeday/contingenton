@@ -9,7 +9,7 @@ type ShoppingCart = {
   items: Array<CartItem>;
 };
 
-// Cart creation returns an array of items
+// Cart Initiation 
 const createCart = (): ShoppingCart => {
   return { items: [] };
 };
