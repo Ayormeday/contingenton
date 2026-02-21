@@ -1,7 +1,11 @@
 import { createProduct } from "../src/product";
-import { createCart, addItem, getTotal } from "../src/shoppingCart";
-import { getSalesTax, getTotalWithTax } from "../src/shoppingCart";
-
+import {
+    createCart,
+    addItem,
+    getTotal,
+    getSalesTax,
+    getTotalWithTax
+} from "../src/shoppingCart";
 
 // Step 1 - Test Cases
 describe("Add products to shopping cart", () => {
